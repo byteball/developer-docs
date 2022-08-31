@@ -1740,7 +1740,7 @@ Examples:
 
 ```javascript
 $asset = 'base';
-trigger.outbuts['base']
+trigger.outputs['base']
 trigger.outputs[$asset]
 trigger.outputs.base
 ```
@@ -2069,7 +2069,7 @@ Any attempt to exceed these limits will result in script's failure.
 
 ## Deployment
 
-AA code can be deployed with [Oscript](https://oscript.org)[ (mainnet)](https://oscript.org)[ editor](https://oscript.org) and [Oscript](https://testnet.oscript.org)[ (testnet)](https://testnet.oscript.org)[ editor](https://testnet.oscript.org), but AA code can also be deployed by sending a unit that includes a message with `app=definition`. This can be done with headless wallet or with AA itself, which has the definition of new AA in its payload.
+AA code can be deployed with [Oscript](https://oscript.org)[ (mainnet)](https://oscript.org)[ editor](https://oscript.org) and [Oscript](https://testnet.oscript.org/)[ (testnet)](https://testnet.oscript.org/)[ editor](https://testnet.oscript.org/), but AA code can also be deployed by sending a unit that includes a message with `app=definition`. This can be done with headless wallet or with AA itself, which has the definition of new AA in its payload.
 
 ```javascript
 const headlessWallet = require('headless-obyte');
