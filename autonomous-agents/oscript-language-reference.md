@@ -541,7 +541,7 @@ delete($arr, 1); // removes element 1
 freeze($arr); // prohibits further mutations of the array
 ```
 
-The left-hand selectors can be arbitrarily long `.a.b[2].c.3.d[].e`. If some elements do not exist, an empty object or array is created automatically. `[]` adds to the end of an array. Array indexes cannot be skipped, i.e. if an array has length 5, you cannot assign to element 7. Once you are dome mutating an object, can call `freeze()` to prevent further accidental mutations.
+The left-hand selectors can be arbitrarily long `.a.b[2].c.3.d[].e`. If some elements do not exist, an empty object or array is created automatically. `[]` adds to the end of an array. Array indexes cannot be skipped, i.e. if an array has length 5, you cannot assign to element 7. Once you are done mutating an object, can call `freeze()` to prevent further accidental mutations.
 
 ### Local functions
 
