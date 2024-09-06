@@ -79,6 +79,18 @@ This will open Send screen, which will be pre-filled to post unstructured key/va
 </a>
 ```
 
+### Requesting to post temporary data
+
+Like the above, this will open Send screen, which will be pre-filled to post unstructured key/value pairs as data (single-address account required) meant for temporary storage. Keys need to be unique.
+
+```markup
+<a href="obyte:data?app=temp_data&amp;anykey1=anyvalue&amp;anykey2=anyvalue">
+    open Send screen with temp data
+</a>
+```
+
+The data posted this way will be available on the Obyte DAG only for 1 day, after which it will be purged but the hashes of the data will stay on the DAG forever. Unlike permanent data, temporary data costs less in fees.
+
 ### Requesting to post data feed
 
 This will open Send screen, which will be pre-filled to post indexable key/value pairs as data feed (single-address account required). Keys need to be unique.
@@ -147,9 +159,39 @@ This will open Send screen, which will be pre-filled to post short text content 
 </a>
 ```
 
+### Requesting to post a system vote
+
+This will open Send screen, which will be pre-filled to post a vote for a system variable.&#x20;
+
+```markup
+<a href="obyte:data?app=system_vote&subject=base_tps_fee&value=11.5">
+    open Send screen with the system vote
+</a>
+```
+
+The `subject` parameter is one of `op_list`, `threshold_size`, `base_tps_fee`, `tps_interval`, `tps_fee_multiplier`, it is the name of the variable being voted for. The `value` parameter is the value of the variable that the voter supports. For `op_list`, it must be a list of 12 valid addresses of the proposed [order providers](https://obyte.org/technology/order-providers) (OPs) separated by `\n` (url-encoded, of course). All other variables have positive numeric (including fractional) values.
+
+The votes are used to govern the network and change the values of the said system-wide variables (described in [OIP 3](https://github.com/byteball/OIPs/blob/master/oip-0003.md), [OIP 5](https://github.com/byteball/OIPs/blob/master/oip-0005.md), and [OIP 6](https://github.com/byteball/OIPs/blob/master/oip-0006.md)). The weight of each vote depends on the balance of the voting address(es) in Bytes.
+
+### Requesting to count votes for a system variable
+
+This will open Send screen, which will be pre-filled to post a vote-count request for a system variable.&#x20;
+
+```markup
+<a href="obyte:data?app=system_vote_count&subject=base_tps_fee">
+    open Send screen with the system vote count request
+</a>
+```
+
+The `subject` parameter is one of `op_list`, `threshold_size`, `base_tps_fee`, `tps_interval`, `tps_fee_multiplier`, it is the name of the variable whose vote count is requested.&#x20;
+
+The vote-count requests are used to govern the network and commit changes to the values of the said system-wide variables (described in [OIP 3](https://github.com/byteball/OIPs/blob/master/oip-0003.md), [OIP 5](https://github.com/byteball/OIPs/blob/master/oip-0005.md), and [OIP 6](https://github.com/byteball/OIPs/blob/master/oip-0006.md)). All votes for the requested variable will be tallied, weighted by the voter's current balance in Bytes, and the value that received most votes will become active. For `op_list`, total votes for each proposed OP will be calculated, and the top 12 will become the new active OPs.
+
+The user pays a 1 GB fee for this request.
+
 ## Receiving textcoins via link
 
-Textcoins are funds that can be sent via text messages. These text messages contain 12 randomly picked words and by entering them into the wallet app in exact same order, user will get the funds that were added to them. If you have ever received any textcoins then you also know that you don't actually have to re-type or copy-paste those words, textcoin receivers are usually directed to [Obyte textcoin claiming page](https://byteball.org/#textcoin?test-test-test-test-test-test-test-test-test-test-test-test), which has green "Recieve funds" button, which will launch the wallet app with exactly those textcoin words. Obyte textcoin claiming page tries to check first if user has wallet installed, but basically, underneath that button is a hyperlink similar to this:
+Textcoins are funds that can be sent via text messages. These text messages contain 12 randomly picked words and by entering them into the wallet app in exact same order, user will get the funds that were added to them. If you have ever received any textcoins then you also know that you don't actually have to re-type or copy-paste those words, textcoin receivers are usually directed to [Obyte textcoin claiming page](https://byteball.org/#textcoin?test-test-test-test-test-test-test-test-test-test-test-test), which has green "Receive funds" button, which will launch the wallet app with exactly those textcoin words. Obyte textcoin claiming page tries to check first if user has wallet installed, but basically, underneath that button is a hyperlink similar to this:
 
 ```markup
 <a href="obyte:textcoin?RANDOMLY-GENERATED-TWELVE-WORDS">
@@ -187,7 +229,7 @@ exports.permanent_pairing_secret = '*';
 ```
 {% endcode %}
 
-Websites that use this feature are [BB Odds](https://bb-odds.herokuapp.com) and [Polls section on obyte.io](https://obyte.io/polls). How it can be done can be seen from Poll bot ([source code](https://github.com/byteball/poll-bot/blob/master/poll-bot.js)). For example, opening a poll app with results of specific poll can be done with hyperlink like this:
+Websites that use this feature are [BB Odds](https://bb-odds.herokuapp.com/) and [Polls section on obyte.io](https://obyte.io/polls). How it can be done can be seen from Poll bot ([source code](https://github.com/byteball/poll-bot/blob/master/poll-bot.js)). For example, opening a poll app with results of specific poll can be done with hyperlink like this:
 
 ```markup
 <a href="obyte:AhMVGrYMCoeOHUaR9v/CZzTC34kScUeA4OBkRCxnWQM+@byteball.org/bb#stats-HAXKXC1EBn8GtiAiW0xtYLAJiyV4V1jTt1rc2TDJ7p4=">
@@ -197,9 +239,9 @@ Websites that use this feature are [BB Odds](https://bb-odds.herokuapp.com) and 
 
 Steem Attestation bot uses this method also as an alternative way how to refer other people, source code for that is more advanced that the poll bot code, but [it can be found on Github](https://github.com/byteball/steem-attestation/blob/66e72d4062f7c1f5a8a057366023c5eaa6863bf4/attestation.js#L90).
 
-## Using protocol URI in QR code
+## Using protocol URI in a QR code
 
-`obyte:` protocol is not only for websites, it could be used in physical world too with QR code. This means you if users have Obyte app installed and they scan any QR code that contains any of the above codes (just value of the href, without quotes and without the HTML around them) then installed Obyte app will open the same way. QR code is not just meant to be printed on paper, it can work on websites too, giving the users the ability to use your services cross-device (browse the website on laptop, scan QR code with phone and complete payment on phone).
+`obyte:` protocol is not only for websites, it could be used in physical world too with QR codes. This means that if users have the Obyte app installed and they scan any QR code that contains any of the above codes (just value of the href, without quotes and without the HTML around them) then the installed Obyte app will open the same way. The QR code is not just meant to be printed on paper, it can work on websites too, giving the users the ability to use your services cross-device (browse the website on a laptop, scan the QR code with a phone and complete the payment on the phone).
 
 There are many online QR code generators to create those QR codes manually, but QR codes can be created in real-time too. Following is the example how to create a QR code with `obyte:` protocol link using jQuery.
 
