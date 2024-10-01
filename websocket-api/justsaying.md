@@ -282,6 +282,76 @@ Following is a list of `justsaying` type JSON messages that are sent over the ne
 }
 ```
 
+### Watch system variables
+
+```
+{
+    type: 'justsaying',
+    content: {
+        subject: 'watch_system_vars', 
+        body: null
+    }
+}
+```
+
+This will subscribe you to updates of the currently active system variables and votes for them.
+
+Immediately after this request, you'll get the current state of all system variables and their past values with the MCIs when they were voted in:
+
+```
+{
+    type: 'justsaying',
+    content: {
+        subject: 'system_vars', 
+        body: {
+            op_list: [
+                {
+                    vote_count_mci: 123,
+                    is_emergency: 0,
+                    value: [
+                        "2FF7PSL7FYXVU5UIQHCVDTTPUOOG75GX",
+                        ....
+                    ]
+                },
+                .....
+            ],
+            threshold_size: [
+                {
+                    vote_count_mci: 456,
+                    is_emergency: 0,
+                    value: 10000
+                },
+                .....
+            ],
+            .....    
+        }
+    }
+}
+```
+
+Similar data will be pushed to you whenever any system variable changes as a result of vote count.
+
+Also, user votes will be pushed to you as soon as they are sent by users (first, with `is_stable=0`, then with `is_stable=1` as soon as the voting transaction becomes final):
+
+```
+{
+    type: "justsaying",
+    content: {
+        subject: "system_var_vote", 
+        body: {
+            subject: "op_list",
+            value: [
+                "2FF7PSL7FYXVU5UIQHCVDTTPUOOG75GX",
+                ....
+            ],
+            author_addresses: ["EJC4A7WQGHEZEKW6RLO7F26SAR4LAQBU"],
+            unit: "LpxhHEfxbOyj0sPlp6UC6XrRABvRJiH4qKEsOcMd1Bc=",
+            is_stable: 1
+        }
+    }
+}
+```
+
 ### Custom JustSaying
 
 You can add your own communication protocol on top of the Obyte one. See event [there](../list-of-events.md#event-for-custom-justsaying).
