@@ -1088,6 +1088,67 @@ It is possible for users to post a profile information about themselves, this re
 {% endtab %}
 {% endtabs %}
 
+### Get the current state of votes for system vars
+
+Get information about the current state of user votes for system variables such as `op_list`, `threshold_size`, `base_tps_fee`, `tps_interval`, and `tps_fee_multiplier`. Since later votes by the same user concerning the same variable overwrite their previous votes, only the latest votes are shown. The response also includes the balances of the voting addresses. They determine the weight of the votes.
+
+{% tabs %}
+{% tab title="request.json" %}
+```javascript
+{
+    type: 'request',
+    content: {
+        tag: tag,
+        command: 'get_system_var_votes'
+    }
+}
+```
+{% endtab %}
+
+{% tab title="response.json" %}
+```json
+{
+    type: "response",
+    content: {
+        tag: tag,
+        response: {
+            votes: {
+                op_list: [
+                    {
+                        address: "EJC4A7WQGHEZEKW6RLO7F26SAR4LAQBU",
+                        unit: "LpxhHEfxbOyj0sPlp6UC6XrRABvRJiH4qKEsOcMd1Bc=",
+                        timestamp: 1727794413,
+                        value: [
+                            "2FF7PSL7FYXVU5UIQHCVDTTPUOOG75GX",
+                            ....
+                        ],
+                        is_stable: 1
+                    },
+                    ....
+                ],
+                threshold_size: [
+                    {
+                        address: "EJC4A7WQGHEZEKW6RLO7F26SAR4LAQBU",
+                        unit: "LpxhHEfxbOyj0sPlp6UC6XrRABvRJiH4qKEsOcMd1Bc=",
+                        timestamp: 1727794413,
+                        value: 10000,
+                        is_stable: 1
+                    },
+                    ....
+                ],
+                ....
+            },
+            balances: {
+                "EJC4A7WQGHEZEKW6RLO7F26SAR4LAQBU": 188576687136,
+                ....
+            }
+        }
+    }
+}
+```
+{% endtab %}
+{% endtabs %}
+
 ### Custom Request
 
 You can add your own communication protocol on top of the Obyte one. See event [there](../list-of-events.md#event-for-custom-request).
