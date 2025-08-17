@@ -8,10 +8,10 @@ Setting up a Headless wallet is required for those wanting to build their own ch
 
 The first thing you should consider, is whether you want to run your bot on a full node or a light node. When setting up the server, the choice to run on a full node will mean you need to make sure to have enough disk space available. The installation is the same whether you run a full node or a light node, but running a full node will allow your bot to have access to all units ever posted to the DAG and thereby be able to perform more complex tasks. If light wallet is enough for you and have no interest in renting a VPS then you can run a light [Obyte headless wallet also on Raspberry Pi 3+](https://medium.com/@alvarlaigna/running-obyte-wallet-on-headless-raspberrypi-3-56007da32739).
 
-Most VPS providers allow you to choose an operating system, and since this guide will be based on Debian 9, you might want to find a provider that offers this as one of their options. Since I will be running a full node, I also must make sure to have enough disk space available and that it is on SSD, since HDD will be too slow. At the time of writing this guide, the required disk space for the full Obyte DAG is about 38 GB but always make sure to have enough or at least the option to add more, should you need it.
+Most VPS providers allow you to choose an operating system, and since this guide will be based on Debian 9, you might want to find a provider that offers this as one of their options. Since I will be running a full node, I also must make sure to have enough disk space available and that it is on SSD, since HDD will be too slow.
 
 * 1 server (with Debian in this case)
-* At least 50-70 GB of fast SSD disk space (HDD is too slow for initial syncing)
+* At least 140-150 GB of fast SSD disk space (HDD is too slow for initial syncing)
 * 1 GB RAM (hubs/relays that accept incoming connections might need up to 4GB)
 
 ## Setting up the server.
@@ -54,10 +54,10 @@ The headless wallet is based on nodejs, and one of the easiest way to control no
 
 (thanks to [http://blog.mobnia.com/installing-node-with-nvm-on-a-debian-server/](http://blog.mobnia.com/installing-node-with-nvm-on-a-debian-server/) for the above two commands)
 
-Then exit user, log in again and install version 10 of nodejs:\
+Then exit user, log in again and install version 14 of nodejs:\
 `exit`\
 `su -l obyte`\
-`nvm install 10`
+`nvm install 14`
 
 Build tools for Windows can be installed with following command (you need to run PowerShell or CMD.exe as Administrator to install this):\
 `npm install --global --production windows-build-tools`
